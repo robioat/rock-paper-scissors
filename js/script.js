@@ -12,6 +12,7 @@ function computerPlay(){
 
 
 function playRound(computerSelection,playerSelection){
+    const computerResults=document.querySelector('#computer');
     if ((computerSelection=="paper" && playerSelection=="rock")||(computerSelection=="scissors" && 
             playerSelection=="paper")||(computerSelection=="rock" && playerSelection=="scissors")){
         return "Computer Wins";
@@ -20,15 +21,64 @@ function playRound(computerSelection,playerSelection){
     {
         return "Draw"
     }
+    
     return "Player Wins";
 }
 
-function game(){
+function game(playerSelection){
+
+    const resultsDiv=document.querySelector('#results');    
+    let computerScore=document.querySelector('#computerScore');
+    let curCompScore=parseInt(computerScore.textContent);
+    let playerScore=document.querySelector('#playerScore');
+    let curPlayerScore=parseInt(playerScore.textContent);
+
     
-    for(let i=0; i<5; i++){
-        let playerSelection=prompt("enter rock, paper, scissors:");
-        console.log(playRound(computerPlay(),playerSelection));
+    
+
+
+    let roundOutcome=playRound(computerPlay(),playerSelection);
+    
+    if(roundOutcome=="Computer Wins"){
+        computerScore.textContent=curCompScore+1;
     }
+    else{
+        playerScore.textContent=curPlayerScore+1;
+    }
+    if(computerScore.textContent==5){
+        resultsDiv.textContent="Computer Wins";
+        rockBtn.remove();
+        paperBtn.remove();
+        scissorsBtn.remove();
+    }
+    if(playerScore.textContent==5){
+        resultsDiv.textContent="Player Wins";
+        rockBtn.remove();
+        paperBtn.remove();
+        scissorsBtn.remove();
+    }
+    
+    //currentScore=parseInt(currentScore);
+
+
+
+    
+
 }
 
-game();
+const rockBtn=document.querySelector('#rock');
+const paperBtn=document.querySelector('#paper');
+const scissorsBtn=document.querySelector('#scissors');
+       
+
+rockBtn.addEventListener('click', () => {
+    game('rock');
+});
+
+paperBtn.addEventListener('click', () => {
+    game('paper');
+});
+
+scissorsBtn.addEventListener('click', () => {
+    game('scissors');
+});
